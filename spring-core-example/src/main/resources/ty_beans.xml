@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="vn.edu.iuh.fit.xml_based.Clazz" id="cls1">
+        <property name="id" value="1001"/>
+        <property name="name" value="DHKTPM17A"/>
+    </bean>
+
+    <bean class="vn.edu.iuh.fit.xml_based.Clazz" id="cls2">
+        <constructor-arg name="id" value="101"/>
+        <constructor-arg name="name" value="DHKTPM 17B"/>
+    </bean>
+
+    <bean id="s2" class="vn.edu.iuh.fit.xml_based.Student">
+        <property name="id" value="100"/>
+        <property name="name" value="Tran van Tun"/>
+        <property name="clazz" ref ="cls2"/>
+    </bean>
+</beans>
