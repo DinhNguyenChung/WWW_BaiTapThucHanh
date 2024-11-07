@@ -38,11 +38,21 @@ public class Address {
         this.number = number;
     }
 
+    public Address(String number, String street, String city, String zipcode, Short country) {
+        this.number = number;
+        this.street = street;
+        this.city = city;
+        this.zipcode = zipcode;
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return number +","
                  + street + ',' +
                 city+ ','+
+                zipcode +','
+                +
                 CountryCodeMapper.mapToString(country);
     }
 }

@@ -31,12 +31,15 @@ public class LabWeek5SprMvcApplication {
 //            Random rnd = new Random();
 //            for (int i = 1; i < 1000; i++) {
 //                // Tạo đối tượng Address theo constructor yêu cầu
-//                Address add = new Address(
-//                        "Quang Trung",
-//                        "HCM",
-//                        CountryCodeMapper.mapToShort(CountryCode.VN) ,  // country (cần ép kiểu nếu CountryCode không là Short)
-//                        rnd.nextInt(1, 1000) + ""  // number
-//                );
+////                Address add = new Address(
+////                        "Quang Trung",
+////                        "HCM",
+////                        CountryCodeMapper.mapToShort(CountryCode.VN) ,  // country (cần ép kiểu nếu CountryCode không là Short)
+////                        rnd.nextInt(1, 1000) + ""  // number
+////                );
+////                addressRepository.save(add);
+//                Address add = new Address(rnd.nextInt(1,1000)+"","Quang Trung","HCM",
+//                        rnd.nextInt(70000,80000)+"", CountryCodeMapper.mapToShort(CountryCode.VN) );
 //                addressRepository.save(add);
 //
 //                // Tạo đối tượng Candidate theo constructor yêu cầu
