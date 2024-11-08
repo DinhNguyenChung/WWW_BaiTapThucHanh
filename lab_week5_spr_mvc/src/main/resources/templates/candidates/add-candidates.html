@@ -2,9 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Candidate</title>
 </head>
 <body>
+<h2>Add New Candidate</h2>
+<form action="#" th:action="@{/addCandidates}" method="post">
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required><br><br>
 
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required><br><br>
+
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" required><br><br>
+
+    <h3>Address</h3>
+    <label for="number">House Number:</label>
+    <input type="text" id="number" name="number" required><br><br>
+
+    <label for="street">Street:</label>
+    <input type="text" id="street" name="street" required><br><br>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required><br><br>
+
+    <label for="zipcode">Zip Code:</label>
+    <input type="text" id="zipcode" name="zipcode" required><br><br>
+
+    <label for="country">Country:</label>
+    <select id="country" name="country" required>
+        <!-- Dòng này sẽ được tạo tự động từ enum CountryCode -->
+        <!-- Ví dụ bên dưới là một số mã quốc gia -->
+        <option value="US">United States</option>
+        <option value="VN">Vietnam</option>
+        <option value="JP">Japan</option>
+        <!-- Add more country codes dynamically -->
+    </select><br><br>
+    <button type="submit">Add Candidate</button>
+</form>
 </body>
 </html>

@@ -3,6 +3,7 @@ package vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
+@NoArgsConstructor
 public class CandidateSkillId implements Serializable {
     private static final long serialVersionUID = -2532697499467151140L;
     @Column(name = "can_id", nullable = false)
@@ -34,4 +36,8 @@ public class CandidateSkillId implements Serializable {
         return Objects.hash(skillId, canId);
     }
 
+    public CandidateSkillId(Long canId, Long skillId) {
+        this.canId = canId;
+        this.skillId = skillId;
+    }
 }

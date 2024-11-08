@@ -19,4 +19,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     // Tìm ứng viên top N theo sắp xếp (ví dụ, tìm top 5 theo tên)
     List<Candidate> findTop5ByOrderByFullNameAsc();
     List<Candidate> findTop5ByOrderByFullNameDesc();
+    Candidate findById(long id);
+    void deleteById(long id);
 }
