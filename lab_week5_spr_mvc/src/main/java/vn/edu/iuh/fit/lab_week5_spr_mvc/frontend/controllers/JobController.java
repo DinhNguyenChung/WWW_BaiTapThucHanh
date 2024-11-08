@@ -19,9 +19,4 @@ public class JobController {
     private JobService jobService;
     @Autowired
     private CandidateServices candidateService;
-//    @GetMapping("/suggestions/{candidateId}")
-//    public List<Job> getSuggestedJobs(@PathVariable Long candidateId) {
-//        Candidate candidate = candidateService.findCandidateById(candidateId); // Giả sử bạn có một service để tìm ứng viên
-//        return jobService.suggestJobsForCandidate(candidate);
-//    }
 }

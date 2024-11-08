@@ -13,6 +13,7 @@ import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.AddressServices;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.CandidateServices;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.CandidateSkillService;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.CompanyServices;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -204,6 +205,27 @@ public String editCandidate(
         model.addAttribute("candidates", candidateRepository.findAll());
         return "candidates/candidates"; // Điều hướng về trang danh sách candidates
     }
+    @Autowired
+    private CompanyServices companyServices;
+    @PostMapping("/login")
+    public String login(@RequestParam String email, Model model) {
+        try {
+         Candidate candidate = candidateRepository.findCandidatesByEmail(email);
+         if (candidate != null) {
+             model.addAttribute("company", companyServices.findAll());
+             return "companies/companys";  // Redirect to another page, e.g., home.jsp or home.html
+         }
+         else
+         {
+             model.addAttribute("error", "Email không đúng. Vui lòng thử lại.");
+             return "index";  // Return to the login page with error message
+         }
 
+        } catch (Exception e) {
+            // If authentication fails
+            model.addAttribute("error", "Đăng nhập không thành công. Vui lòng thử lại.");
+            return "index";  // Return to the login page with error message
+        }
+    }
 
 }

@@ -21,4 +21,5 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     List<Candidate> findTop5ByOrderByFullNameDesc();
     Candidate findById(long id);
     void deleteById(long id);
+    Candidate findCandidatesByEmail(String email);
 }
