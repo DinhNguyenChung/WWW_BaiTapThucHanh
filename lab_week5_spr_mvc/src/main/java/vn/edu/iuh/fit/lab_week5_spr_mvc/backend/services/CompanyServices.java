@@ -15,4 +15,7 @@ public class CompanyServices {
     public List<Company> findAll() {
         return companyRepository.findAll();
     }
+    public Company findCompanyByEmail(String email) {
+        return companyRepository.findCompanyByEmail(email);
+    }
 }

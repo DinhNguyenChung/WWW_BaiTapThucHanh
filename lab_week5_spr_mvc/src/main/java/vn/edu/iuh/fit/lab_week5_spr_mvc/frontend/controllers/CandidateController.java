@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.AddressRepository;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository;
-import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.AddressServices;
-import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.CandidateServices;
-import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.CandidateSkillService;
-import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.CompanyServices;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -122,53 +119,7 @@ public class CandidateController {
         model.addAttribute("countries", CountryCode.values()); // Truyền danh sách quốc gia để chỉnh sửa
         return "candidates/update-candidates"; // Đây là trang HTML để chỉnh sửa
     }
-//     Cập nhật Candidate sau khi chỉnh sửa
-//    @PostMapping("/candidates/edit/{id}")
-//    public String editCandidate(
-//            @PathVariable("id") Long id,
-//            @RequestParam("dob") String dob,
-//            @RequestParam("email") String email,
-//            @RequestParam("fullName") String fullName,
-//            @RequestParam("phone") String phone,
-//            @RequestParam("address.number") String number,
-//            @RequestParam("address.street") String street,
-//            @RequestParam("address.city") String city,
-//            @RequestParam("address.zipcode") String zipcode,
-//            @RequestParam("address.country") String countryCode,
-//            Model model
-//    ) {
-//        Candidate candidate = candidateServices.findCandidateById(id);
-//        if (candidate == null) {
-//            model.addAttribute("error", "Candidate not found.");
-//            return "error"; // Có thể điều hướng đến trang lỗi
-//        }
-//
-//        try {
-//            candidate.setDob(LocalDate.parse(dob));
-//            candidate.setEmail(email);
-//            candidate.setFullName(fullName);
-//            candidate.setPhone(phone);
-//
-//            Address address = candidate.getAddress();
-//            if (address == null) {
-//                address = new Address();
-//                candidate.setAddress(address);
-//            }
-//            address.setNumber(number);
-//            address.setStreet(street);
-//            address.setCity(city);
-//            address.setZipcode(zipcode);
-//            address.setCountry(Short.valueOf((short) CountryCode.valueOf(countryCode).getNumeric()));
-//
-//            candidateServices.saveCandidate(candidate); // Lưu Candidate đã chỉnh sửa
-//        } catch (IllegalArgumentException e) {
-//            model.addAttribute("error", "Invalid country code.");
-//            return "error"; // Có thể điều hướng đến trang lỗi
-//        }
-//
-//        model.addAttribute("candidates", candidateRepository.findAll());
-//        return "candidates/candidates"; // Chuyển hướng về danh sách Candidate
-//    }
+
 @PostMapping("/candidates/edit/{id}")
 public String editCandidate(
         @PathVariable("id") Long id,
@@ -207,16 +158,30 @@ public String editCandidate(
     }
     @Autowired
     private CompanyServices companyServices;
+    @Autowired
+    private JobService jobService;
+//    @Autowired
+//    private CandidateSkillService candidateSkillService;
     @PostMapping("/login")
     public String login(@RequestParam String email, Model model) {
         try {
          Candidate candidate = candidateRepository.findCandidatesByEmail(email);
          if (candidate != null) {
+             List<CandidateSkill> candidateSkills = candidateSkillService.getSkillsByCandidate(candidate.getId());
+             model.addAttribute("CandidateSkill",candidateSkills );
+             model.addAttribute("candidate",candidate);
              model.addAttribute("company", companyServices.findAll());
-             return "companies/companys";  // Redirect to another page, e.g., home.jsp or home.html
+             model.addAttribute("job",jobService.getMatchingJobsForCandidate(candidate.getId()));
+             return "candidates/home-candidate";  // Redirect to another page, e.g., home.jsp or home.html
          }
+
          else
          {
+             Company company = companyServices.findCompanyByEmail(email);
+             if (company != null) {
+                 model.addAttribute("company", company);
+                 return "companies/home-company";
+             }
              model.addAttribute("error", "Email không đúng. Vui lòng thử lại.");
              return "index";  // Return to the login page with error message
          }

@@ -9,7 +9,10 @@ import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.Skill;
 import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job, Long> {
-//    @Query("SELECT j FROM Job j JOIN JobSkill js ON j.id = js.job.id WHERE js.skill.id = :skillId")
-//    List<Job> findJobsBySkillId(@Param("skillId") Long skillId);
-//    List<Job> findBySkillsIn(List<Skill> skills);
+    @Query("SELECT j FROM Job j " +
+            "JOIN JobSkill js ON j.id = js.job.id " +
+            "JOIN Skill s ON js.skill.id = s.id " +
+            "JOIN CandidateSkill cs ON s.id = cs.skill.id " +
+            "WHERE cs.can.id = :candidateId AND js.skillLevel <= cs.skillLevel")
+    List<Job> findJobsMatchingCandidateSkills(@Param("candidateId") Long candidateId);
 }

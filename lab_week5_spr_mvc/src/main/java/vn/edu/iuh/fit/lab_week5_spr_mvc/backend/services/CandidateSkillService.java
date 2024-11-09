@@ -17,7 +17,7 @@ public class CandidateSkillService {
 
 
     public List<CandidateSkill> getSkillsByCandidate(Long candidateId) {
-        return candidateSkillRepository.findByCan_Id(candidateId);
+        return candidateSkillRepository.findByCanId(candidateId);
     }
 
     public void addCandidateSkill(CandidateSkill candidateSkill) {
