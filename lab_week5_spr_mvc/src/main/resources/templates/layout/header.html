@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div th:fragment="header">
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <!-- Hiển thị nút Login hoặc Logout dựa trên trạng thái đăng nhập -->
+                <div class="text-end" style="flex: 1">
+                    <div th:if="${UserName == null}">
+                        <!-- Nút Login khi chưa đăng nhập -->
+                        <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+
+                        <!-- Nút Sign-up với danh sách lựa chọn -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sign-up
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/addCandidates">Add Candidate</a></li>
+                                <li><a class="dropdown-item" href="/addCompany">Add Company</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div th:if="${UserName != null}">
+                        <!-- Nút Logout khi đã đăng nhập -->
+                        <a href="/" class="btn btn-outline-light me-2">Logout</a>
+                        <span class="User-Name text-white">Welcome, <span th:text="${UserName}">User</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm"  action="/login" method="post">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="handleLogin()">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

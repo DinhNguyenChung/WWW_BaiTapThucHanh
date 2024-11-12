@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.Company;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.Job;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.JobSkill;
@@ -17,14 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-    @RequestMapping("/company")
-public class CompanyController
-{
+public class HomeController {
     @Autowired
     private CompanyServices companyServices;
     @Autowired
     private JobService jobService;
-    @GetMapping("/companies")
+    @GetMapping("")
     public String companies( Model model){
         List<Company> companies = companyServices.findAll();
         model.addAttribute("company",companies);
@@ -39,7 +35,6 @@ public class CompanyController
 
         model.addAttribute("jobsByCompany", jobsByCompany);
 
-        return "companies/companys";
+        return "index";
     }
-
 }

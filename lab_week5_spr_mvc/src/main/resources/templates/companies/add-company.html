@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Company</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      display: flex;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .image-section {
+      flex: 1;
+      background-image: url('https://i.ibb.co/GkckNCg/company.jpg'); /* Thay bằng đường dẫn hình ảnh thật */
+      background-size: cover;
+      background-position: center;
+      background-color: #df78c7;
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Điều chỉnh lại để form không bị căng hết chiều cao */
+      overflow-y: auto; /* Cho phép cuộn dọc khi nội dung quá lớn */
+      max-height: 100%; /* Đảm bảo rằng phần này không vượt quá chiều cao của container */
+    }
+
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin: 10px 0 5px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 5px 0 15px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .image-section {
+        height: 300px;
+      }
+
+      .form-section {
+        padding: 15px;
+      }
+    }
+    .container .back{
+      justify-items: flex-end;
+      color: #05b4ef;
+      align-self: end;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="image-section"></div>
+  <div class="form-section" >
+    <h2>Add New Company</h2>
+    <form action="#" th:action="@{/addCompany}" method="post">
+      <label for="dob">Abouts:</label>
+      <input type="text" id="dob" name="dob" required><br><br>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="fullName">Comp Name:</label>
+      <input type="text" id="fullName" name="fullName" required><br><br>
+
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" required><br><br>
+      <label for="phone">Web:</label>
+      <input type="url" id="web" name="web" required><br><br>
+
+      <h3>Address</h3>
+      <label for="number">House Number:</label>
+      <input type="text" id="number" name="number" required><br><br>
+
+      <label for="street">Street:</label>
+      <input type="text" id="street" name="street" required><br><br>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required><br><br>
+
+      <label for="zipcode">Zip Code:</label>
+      <input type="text" id="zipcode" name="zipcode" required><br><br>
+
+      <label for="country">Country:</label>
+      <select id="country" name="country" required>
+        <option value="" disabled selected>Select Country</option>
+        <th:block th:each="country : ${countryCodes}">
+          <option th:value="${country.name()}" th:text="${country.getName()}"></option>
+        </th:block>
+      </select>
+      <br><br>
+      <button type="submit">Add Company</button>
+    </form>
+    <a href="/" class="btn btn-secondary mt-3 back">Home</a>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -13,13 +13,12 @@ import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
+@RequestMapping("/candidates")
 public class CandidateController {
     @Autowired
     private CandidateRepository candidateRepository;
@@ -37,7 +36,7 @@ public class CandidateController {
         model.addAttribute("candidates", candidateRepository.findAll());
         return "candidates/candidates";
     }
-    @GetMapping("/candidates")
+    @GetMapping("/candidate")
     public String showCandidateListPaging(Model model,
                                           @RequestParam("page") Optional<Integer> page,
                                           @RequestParam("size") Optional<Integer> size) {
@@ -55,16 +54,16 @@ public class CandidateController {
         }
         return "candidates/candidates-paging";
     }
-    @PostMapping("/addSkill")
-    public ResponseEntity<String> addSkillToCandidate(@RequestParam Long candidateId, @RequestParam Long skillId, @RequestParam Byte skillLevel, @RequestParam String moreInfos) {
-        CandidateSkillId candidateSkillId = new CandidateSkillId(candidateId, skillId);
-        CandidateSkill candidateSkill = new CandidateSkill();
-        candidateSkill.setId(candidateSkillId);
-        candidateSkill.setSkillLevel(skillLevel);
-        candidateSkill.setMoreInfos(moreInfos);
-        candidateSkillService.addCandidateSkill(candidateSkill);
-        return ResponseEntity.ok("Skill added to candidate successfully.");
-    }
+//    @PostMapping("/addSkill")
+//    public ResponseEntity<String> addSkillToCandidate(@RequestParam Long candidateId, @RequestParam Long skillId, @RequestParam Byte skillLevel, @RequestParam String moreInfos) {
+//        CandidateSkillId candidateSkillId = new CandidateSkillId(candidateId, skillId);
+//        CandidateSkill candidateSkill = new CandidateSkill();
+//        candidateSkill.setId(candidateSkillId);
+//        candidateSkill.setSkillLevel(skillLevel);
+//        candidateSkill.setMoreInfos(moreInfos);
+//        candidateSkillService.addCandidateSkill(candidateSkill);
+//        return ResponseEntity.ok("Skill added to candidate successfully.");
+//    }
 
     @GetMapping("/{id}/skills")
     public ResponseEntity<List<CandidateSkill>> getSkillsByCandidate(@PathVariable Long id) {
@@ -84,7 +83,7 @@ public class CandidateController {
 //        model.addAttribute("add-candidates", candidateRepository.findAll());
         return "candidates/add-candidates";
     }
-    @PostMapping("/addCandidates")
+    @PostMapping("/addCandidate")
     public String addCandidate(
             @RequestParam("dob") String dob,
             @RequestParam("email") String email,
@@ -160,37 +159,8 @@ public String editCandidate(
     private CompanyServices companyServices;
     @Autowired
     private JobService jobService;
-//    @Autowired
-//    private CandidateSkillService candidateSkillService;
-    @PostMapping("/login")
-    public String login(@RequestParam String email, Model model) {
-        try {
-         Candidate candidate = candidateRepository.findCandidatesByEmail(email);
-         if (candidate != null) {
-             List<CandidateSkill> candidateSkills = candidateSkillService.getSkillsByCandidate(candidate.getId());
-             model.addAttribute("CandidateSkill",candidateSkills );
-             model.addAttribute("candidate",candidate);
-             model.addAttribute("company", companyServices.findAll());
-             model.addAttribute("job",jobService.getMatchingJobsForCandidate(candidate.getId()));
-             return "candidates/home-candidate";  // Redirect to another page, e.g., home.jsp or home.html
-         }
 
-         else
-         {
-             Company company = companyServices.findCompanyByEmail(email);
-             if (company != null) {
-                 model.addAttribute("company", company);
-                 return "companies/home-company";
-             }
-             model.addAttribute("error", "Email không đúng. Vui lòng thử lại.");
-             return "index";  // Return to the login page with error message
-         }
 
-        } catch (Exception e) {
-            // If authentication fails
-            model.addAttribute("error", "Đăng nhập không thành công. Vui lòng thử lại.");
-            return "index";  // Return to the login page with error message
-        }
-    }
+
 
 }

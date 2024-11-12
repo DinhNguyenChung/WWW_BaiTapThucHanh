@@ -26,6 +26,8 @@ public class JobService {
     public List<Job> getMatchingJobsForCandidate(Long candidateId) {
         return jobRepository.findJobsMatchingCandidateSkills(candidateId);
     }
-
+    public List<Job> getJobsByCompany(Long companyId) {
+        return jobRepository.findJobsByCompanyId(companyId);
+    }
 
 }

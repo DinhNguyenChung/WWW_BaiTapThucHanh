@@ -29,6 +29,16 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${company.compName}">Company Name</h5>
                         <p class="card-text" th:text="${company.about}">About the Company</p>
+                        <p><strong>Recruitment: </strong></p>
+
+                        <!-- Lặp qua danh sách công việc của từng công ty -->
+                        <ul>
+                            <li th:each="job : ${jobsByCompany[company.id]}">
+                                <span th:text="${job.jobName}">Job Name</span>
+                            </li>
+                        </ul>
+                        <p><strong>Skills:</strong></p>
+
                         <p><strong>Email:</strong> <span th:text="${company.email}">email@example.com</span></p>
                         <p><strong>Phone:</strong> <span th:text="${company.phone}">123-456-789</span></p>
                         <p><strong>Website:</strong> <a th:href="${company.webUrl}" th:text="${company.webUrl}" target="_blank">Company Website</a></p>
@@ -38,21 +48,21 @@
             </a>
         </div>
     </div>
-    <div>
-        <h2>Xin Chào <span th:text="${candidate.getFullName()}"></span></h2>
-        <p><strong>Skills: </strong></p>
-        <p th:each="candidateSkill:${CandidateSkill}">
-            <span th:text="${candidateSkill.skill.getSkillName()}" ></span>
-        </p>
-    </div>
-    <h1>Công việc phù hợp với bạn :</h1>
-    <div class="row">
-        <div class="col-md-4 card" th:each="job:${job}">
-            <p ><strong>Job Desc: </strong> <span th:text="${job.jobDesc}"></span></p>
-            <p ><strong>Job Name: </strong> <span th:text="${job.jobName}"></span></p>
-        </div>
+<!--    <div>-->
+<!--        <h2>Xin Chào <span th:text="${candidate.getFullName()}"></span></h2>-->
+<!--        <p><strong>Skills: </strong></p>-->
+<!--        <p th:each="candidateSkill:${CandidateSkill}">-->
+<!--            <span th:text="${candidateSkill.skill.getSkillName()}" ></span>-->
+<!--        </p>-->
+<!--    </div>-->
+<!--    <h1>Công việc phù hợp với bạn :</h1>-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-4 card" th:each="job:${job}">-->
+<!--            <p ><strong>Job Desc: </strong> <span th:text="${job.jobDesc}"></span></p>-->
+<!--            <p ><strong>Job Name: </strong> <span th:text="${job.jobName}"></span></p>-->
+<!--        </div>-->
 
-    </div>
+<!--    </div>-->
 </div>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AddJobSkills</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+
+        }
+        .container form{
+            background-color: antiquewhite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container form input{
+            width: 180px;
+        }
+        .container form .form-group{
+            width: 300px;
+        }
+        .container form h3 {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<h1>Tao JOB Skill de tuyen Candidate</h1>
+<div class="container">
+    <form>
+        <h3>JOB</h3>
+        <div class="form-group">
+            <label for="jobDesc">Job Desc</label>
+            <input type="text" name="jobDesc" class="form-control" id="jobDesc" aria-describedby="jobDesc" placeholder="Enter Desc">
+        </div>
+        <div class="form-group">
+            <label for="JobName">Job Name</label>
+            <input type="text" name="JobName" class="form-control" id="JobName" placeholder="JobName">
+        </div>
+        <h3>Skill</h3>
+        <div class="form-group">
+            <label for="skillDesc">Skill Desc</label>
+            <input type="text" name="skillDesc" class="form-control" id="skillDesc" aria-describedby="skillDesc" placeholder="Enter skillDesc">
+
+        </div>
+        <div class="form-group">
+            <label for="skillName">Skill Name</label>
+            <input type="text" name="skillName" class="form-control" id="skillName" placeholder="skill Name">
+        </div>
+        <div class="form-group">
+            <label for="skillType">Type</label>
+<!--            <input type="skillType" class="form-control" id="skillType" placeholder="skil lType">-->
+            <select id="skillType" name="skillType">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

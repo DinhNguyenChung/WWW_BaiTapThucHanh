@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.lab_week5_spr_mvc.frontend.controllers;
 
+import ch.qos.logback.core.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,4 +20,9 @@ public class JobController {
     private JobService jobService;
     @Autowired
     private CandidateServices candidateService;
+
+    @GetMapping("/AddjobSkills")
+    public String addJobSkills(Model model) {
+        return "jobs/add-job-skills";
+    }
 }

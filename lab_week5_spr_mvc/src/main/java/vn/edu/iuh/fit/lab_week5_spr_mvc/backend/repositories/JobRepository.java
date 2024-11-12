@@ -15,4 +15,5 @@ public interface JobRepository extends JpaRepository<Job, Long> {
             "JOIN CandidateSkill cs ON s.id = cs.skill.id " +
             "WHERE cs.can.id = :candidateId AND js.skillLevel <= cs.skillLevel")
     List<Job> findJobsMatchingCandidateSkills(@Param("candidateId") Long candidateId);
+    List<Job> findJobsByCompanyId(Long companyId);
 }
