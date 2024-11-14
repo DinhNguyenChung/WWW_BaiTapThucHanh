@@ -12,6 +12,32 @@
 Đã thực hiện yêu cầu 
 1. Viết các entities bằng hibernate được lưu trong modals
 2. Viết các repositories interface và services để tạo ra 1000 dữ liệu address và Candidates ngẫu nhiên
-3. Hiển thị được dữ liệu của Candidates lên localhost:8080/list và Candidate-Paging trên localhost:8080/candidates
-4. Có thể tạo, chỉnh sửa, edit Candidates 
-5. Candidate có thể log va hiển ra giao diện xem các công ty tuyển dụng (localhost:8080) Và đề xuất được công việc phù hợp với skill của mỗi Candidates
+3. Hiển thị được dữ liệu của Candidates lên http://localhost:8080/candidates/list và Candidate-Paging chứa list Candidates trên http://localhost:8080/candidates/candidate
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+4. Có thể tạo mới candidate và company bấm vào sigup sẽ hiển thị 2 list addCandidate và addCompany
+![img_3.png](img_3.png)
+   Giao diện AddCandidate
+![img_4.png](img_4.png)
+    Giao diện AddCompany
+![img_5.png](img_5.png)
+   Bấm vào login để log email tương ứng
+![img_6.png](img_6.png)
+   Login thành công của Candidate sẽ hiển thị ra kĩ năng và công việc phù hợp của Candidate
+![img_7.png](img_7.png)
+   Nếu chưa có skill nào , Candidate có thể add mới skill để hiển thị ra Jobs phù hợp
+![img_8.png](img_8.png)
+   Candidate có thể edit thông tin cá nhân của mình
+   ![img_9.png](img_9.png)
+
+    Login thành công của company sẽ hiển thị ra những bài tuyển dụng cho công việc và kí năng yêu cầu
+![img_10.png](img_10.png)
+   Company có thể add bài tuyển dụng mới (Add JobSkills)
+![img_11.png](img_11.png)
+   Trên mỗi bài khi bấm vào findCandidates sẽ hiển ra danh sách những Candidate phù hợp với công việc đó
+   ![img_12.png](img_12.png)
+   Khi select candidate nào sẽ hiển thị ra email tương ứng và bấm gửi tuyển dụng cho Candidate đó
+![img_13.png](img_13.png)
+### Notes
+Tabs Header đã có ràng buộc giữa home,logout,sigup,edit
+ 

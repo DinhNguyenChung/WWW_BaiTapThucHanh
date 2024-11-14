@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-</head>
-<body>
 <div th:fragment="header">
     <header class="p-3 bg-dark text-white">
         <div class="container">
@@ -15,7 +7,12 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li th:if="${UserName != null}">
+                        <a th:href="@{'/home/' + ${id} + '?emailHeader=' + ${emailHeader}}" class="nav-link px-2 text-white">Home</a>
+                    </li>
+                    <li th:if="${UserName == null}">
+                        <a href="/" class="nav-link px-2 text-white">Home</a>
+                    </li>
                     <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
@@ -26,13 +23,9 @@
                     <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                 </form>
 
-                <!-- Hiển thị nút Login hoặc Logout dựa trên trạng thái đăng nhập -->
                 <div class="text-end" style="flex: 1">
                     <div th:if="${UserName == null}">
-                        <!-- Nút Login khi chưa đăng nhập -->
                         <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-
-                        <!-- Nút Sign-up với danh sách lựa chọn -->
                         <div class="btn-group">
                             <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 Sign-up
@@ -44,16 +37,28 @@
                         </div>
                     </div>
 
-                    <div th:if="${UserName != null}">
-                        <!-- Nút Logout khi đã đăng nhập -->
-                        <a href="/" class="btn btn-outline-light me-2">Logout</a>
-                        <span class="User-Name text-white">Welcome, <span th:text="${UserName}">User</span></span>
-                    </div>
+                    <!-- Hiển thị thông tin đăng nhập và nút Logout nếu đã đăng nhập -->
+                   <div th:if="${UserName != null}" >
+                       <div th:if="${candidate != null}">
+                           <a href="/" class="btn btn-outline-light me-2">Logout</a>
+                           <span class="User-Name text-white">Welcome, <span th:text="${UserName}">User</span></span>
+                           <a th:href="@{/candidates/edit/{id}(id=${id})}" class="btn btn-outline-light me-2">Edit Candidate</a>
+
+                       </div>
+
+                       <div th:if="${company != null}">
+                           <a href="/" class="btn btn-outline-light me-2">Logout</a>
+                           <span class="User-Name text-white">Welcome, <span th:text="${UserName}">User</span></span>
+                           <a th:href="@{/company/edit/{id}(id=${id})}" class="btn btn-outline-light me-2">Edit Company</a>
+                       </div>
+                   </div>
+
                 </div>
 
             </div>
         </div>
     </header>
+
     <!-- Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -63,7 +68,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="loginForm"  action="/login" method="post">
+                    <form id="loginForm" action="/login" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
@@ -75,6 +80,3 @@
         </div>
     </div>
 </div>
-
-</body>
-</html>

@@ -20,8 +20,8 @@ public class CandidateSkillService {
         return candidateSkillRepository.findByCanId(candidateId);
     }
 
-    public void addCandidateSkill(CandidateSkill candidateSkill) {
-        candidateSkillRepository.save(candidateSkill);
+    public CandidateSkill addCandidateSkill(CandidateSkill candidateSkill) {
+       return candidateSkillRepository.save(candidateSkill);
     }
 
     public List<Candidate> findCandidatesBySkill(Long skillId) {

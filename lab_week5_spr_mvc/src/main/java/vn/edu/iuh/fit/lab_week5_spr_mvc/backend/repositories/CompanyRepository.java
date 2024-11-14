@@ -5,4 +5,5 @@ import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     Company findCompanyByEmail(String email);
+    Company findById(long id);
 }

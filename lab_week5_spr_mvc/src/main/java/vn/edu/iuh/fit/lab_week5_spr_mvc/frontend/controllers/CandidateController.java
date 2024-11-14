@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.AddressRepository;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.SkillRepository;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services.*;
 
 import java.time.LocalDate;
@@ -30,6 +31,8 @@ public class CandidateController {
     private AddressServices addressServices;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private SkillRepository skillRepository;
 
     @GetMapping("/list")
     public String showCandidateList(Model model) {
@@ -115,10 +118,40 @@ public class CandidateController {
         Candidate candidate = candidateServices.findCandidateById(id);
         System.out.println(candidate);
         model.addAttribute("candidate", candidate);
+        model.addAttribute("UserName",candidate.getFullName());
+        model.addAttribute("id",candidate.getId());
+        model.addAttribute("emailHeader",candidate.getEmail());
         model.addAttribute("countries", CountryCode.values()); // Truyền danh sách quốc gia để chỉnh sửa
         return "candidates/update-candidates"; // Đây là trang HTML để chỉnh sửa
     }
 
+//@PostMapping("/candidates/edit/{id}")
+//public String editCandidate(
+//        @PathVariable("id") Long id,
+//        @ModelAttribute Candidate candidate,
+//        Model model
+//) {
+//    // Tìm candidate trong cơ sở dữ liệu
+//    Candidate existingCandidate = candidateServices.findCandidateById(id);
+//
+//    // Lưu Address trước khi lưu Candidate nếu chưa có trong CSDL
+//    if (candidate.getAddress() != null) {
+//        addressRepository.save(candidate.getAddress()); // Lưu Address vào CSDL
+//    }
+//
+//    // Cập nhật thông tin của Candidate từ form
+//    existingCandidate.setDob(candidate.getDob());
+//    existingCandidate.setEmail(candidate.getEmail());
+//    existingCandidate.setFullName(candidate.getFullName());
+//    existingCandidate.setPhone(candidate.getPhone());
+//    existingCandidate.setAddress(candidate.getAddress());
+//
+//    // Lưu Candidate đã chỉnh sửa vào CSDL
+//    candidateServices.saveCandidate(existingCandidate);
+//
+//    model.addAttribute("candidates", candidateRepository.findAll());
+//    return "candidates/candidates"; // Chuyển hướng về danh sách Candidate
+//}
 @PostMapping("/candidates/edit/{id}")
 public String editCandidate(
         @PathVariable("id") Long id,
@@ -130,7 +163,8 @@ public String editCandidate(
 
     // Lưu Address trước khi lưu Candidate nếu chưa có trong CSDL
     if (candidate.getAddress() != null) {
-        addressRepository.save(candidate.getAddress()); // Lưu Address vào CSDL
+        // Lưu Address vào CSDL
+        addressRepository.save(candidate.getAddress());
     }
 
     // Cập nhật thông tin của Candidate từ form
@@ -140,12 +174,25 @@ public String editCandidate(
     existingCandidate.setPhone(candidate.getPhone());
     existingCandidate.setAddress(candidate.getAddress());
 
+    // Cập nhật mã quốc gia từ countryCode (sử dụng CountryCode để lấy tên quốc gia)
+    if (candidate.getAddress() != null && candidate.getAddress().getCountry() != null) {
+        // Chuyển mã quốc gia từ Short thành CountryCode
+        Short countryShort = candidate.getAddress().getCountry();
+        CountryCode countryCode = CountryCode.getByCode(countryShort);
+
+        if (countryCode != null) {
+            // Lưu quốc gia vào Address
+            candidate.getAddress().setCountry(countryShort);
+        }
+    }
+
     // Lưu Candidate đã chỉnh sửa vào CSDL
     candidateServices.saveCandidate(existingCandidate);
 
     model.addAttribute("candidates", candidateRepository.findAll());
     return "candidates/candidates"; // Chuyển hướng về danh sách Candidate
 }
+
     @GetMapping("/delete/{id}")
     public String deleteCandidate(@PathVariable("id") Long id, Model model) {
         // Xóa candidate theo id
@@ -159,6 +206,60 @@ public String editCandidate(
     private CompanyServices companyServices;
     @Autowired
     private JobService jobService;
+    @Autowired
+    private SkillService skillService;
+
+@PostMapping("/addSkillForCandidate")
+public String addNewSkillForCandidate(Model model, @RequestParam("newSkill") String newSkill,
+                                      @RequestParam("idCandidate") Long idCandidate,
+                                      @RequestParam("skillDesc") String skillDesc,
+                                      @RequestParam("skillType") Byte skillType,
+                                      @RequestParam("skillMoreInfo") String skillMoreInfo,
+                                      @RequestParam("skillLevel") Byte skillLevel) {
+    // Lấy thông tin ứng viên
+    Candidate candidate = candidateServices.findCandidateById(idCandidate);
+
+    // Kiểm tra và thêm kỹ năng nếu chưa tồn tại
+    Skill skill = skillService.findByName(newSkill);
+    if (skill == null) {
+        skill = new Skill();
+        skill.setSkillName(newSkill);
+        skill.setSkillDescription(skillDesc);
+        skill.setType(skillType);
+        skill = skillRepository.save(skill);
+    }
+        CandidateSkillId candidateSkillId = new CandidateSkillId();
+        candidateSkillId.setCanId(candidate.getId());
+        candidateSkillId.setSkillId(skill.getId());
+
+
+    // Thêm kỹ năng vào ứng viên
+    CandidateSkill candidateSkill = new CandidateSkill();
+    candidateSkill.setId(candidateSkillId);
+    candidateSkill.setSkill(skill);
+    candidateSkill.setSkillLevel(skillLevel);
+    candidateSkill.setMoreInfos(skillMoreInfo);
+    candidateSkill.setCan(candidate);
+    candidateSkillService.addCandidateSkill(candidateSkill);
+
+    // Đảm bảo kỹ năng được liên kết với công việc phù hợp
+    List<Job> jobsRequiringSkill = jobService.findJobsBySkillId(skill.getId());
+    if (jobsRequiringSkill.isEmpty()) {
+        // Logic để thêm liên kết skill-job vào job_skill (nếu cần)
+        jobService.addSkillToRelevantJobs(skill);
+    }
+
+    // Hiển thị thông tin ứng viên với các công việc phù hợp
+    List<CandidateSkill> candidateSkills = candidateSkillService.getSkillsByCandidate(candidate.getId());
+    model.addAttribute("CandidateSkill", candidateSkills);
+    model.addAttribute("candidate", candidate);
+    model.addAttribute("company", companyServices.findAll());
+    model.addAttribute("job", jobService.getMatchingJobsForCandidate(candidate.getId()));
+    model.addAttribute("UserName", candidate.getFullName());
+    model.addAttribute("Skills", skillService.getAllSkills());
+
+    return "candidates/home-candidate";
+}
 
 
 

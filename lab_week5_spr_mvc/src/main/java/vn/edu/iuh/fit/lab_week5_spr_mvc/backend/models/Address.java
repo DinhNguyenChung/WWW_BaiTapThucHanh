@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models;
 
+import com.neovisionaries.i18n.CountryCode;
 import jakarta.persistence.*;
 import lombok.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.converters.CountryCodeMapper;
@@ -48,11 +49,15 @@ public class Address {
 
     @Override
     public String toString() {
-        return number +","
-                 + street + ',' +
-                city+ ','+
-                zipcode +','
-                +
-                CountryCodeMapper.mapToString(country);
+        // Kiểm tra xem country có hợp lệ không trước khi gọi getByCode
+        if (country != null) {
+            CountryCode countryCode = CountryCode.getByCode(country); // Sử dụng getByCode thay vì getByNumericCode
+            if (countryCode != null) {
+                return number + "," + street + ',' + city + ',' + zipcode + ',' + countryCode.getName();
+            }
+        }
+        // Nếu country không hợp lệ hoặc không tìm thấy mã quốc gia, trả về "Unknown"
+        return number + "," + street + ',' + city + ',' + zipcode + ", Unknown";
     }
+
 }

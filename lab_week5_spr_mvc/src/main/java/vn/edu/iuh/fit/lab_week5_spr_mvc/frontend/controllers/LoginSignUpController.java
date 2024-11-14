@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.JobSkillDTO;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.JobWithSkillsDTO;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.converters.CountryCodeMapper;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository;
@@ -44,10 +46,12 @@ public class LoginSignUpController {
                 List<CandidateSkill> candidateSkills = candidateSkillService.getSkillsByCandidate(candidate.getId());
                 model.addAttribute("CandidateSkill",candidateSkills );
                 model.addAttribute("candidate",candidate);
-                model.addAttribute("company", companyServices.findAll());
+                model.addAttribute("companies", companyServices.findAll());
                 model.addAttribute("job",jobService.getMatchingJobsForCandidate(candidate.getId()));
                 model.addAttribute("UserName",candidate.getFullName());
+                model.addAttribute("id",candidate.getId());
                 model.addAttribute("Skills",skillService.getAllSkills());
+                model.addAttribute("emailHeader",candidate.getEmail());
                 return "candidates/home-candidate";  // Redirect to another page, e.g., home.jsp or home.html
             }
 
@@ -57,6 +61,12 @@ public class LoginSignUpController {
                 if (company != null) {
                     model.addAttribute("company", company);
                     model.addAttribute("UserName",company.getCompName());
+                    model.addAttribute("id",company.getId());
+                    model.addAttribute("emailHeader",company.getEmail());
+                    List<Job> jobs= jobService.getJobsByCompany(company.getId());
+//                    model.addAttribute("jobs",jobs);
+                    List<JobWithSkillsDTO> jobSkills = jobService.getJobWithSkills(company.getId());
+                    model.addAttribute("jobSkills", jobSkills);
                     return "companies/home-company";
                 }
                else {
@@ -79,6 +89,7 @@ public class LoginSignUpController {
 
         } catch (Exception e) {
             // If authentication fails
+            System.out.println(e);
             model.addAttribute("error", "Đăng nhập không thành công. Vui lòng thử lại.");
             return "index";  // Return to the login page with error message
         }

@@ -3,44 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Candidate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<h2>Update Candidate</h2>
-<form th:action="@{/candidates/edit/{id}(id=${candidate.id})}"   th:object="${candidate}" method="post">
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" th:value="${candidate.dob}"/><br/>
+<header th:include="layout/header :: header"></header>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" th:value="${candidate.email}"/><br/>
+<main class="container my-5">
+    <h2 class="mb-4">Update Candidate</h2>
+    <form th:action="@{/candidates/candidates/edit/{id}(id=${candidate.id})}" th:object="${candidate}" method="post">
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" class="form-control" th:value="${candidate.dob}" />
+        </div>
 
-    <label for="fullName">Full Name:</label>
-    <input type="text" id="fullName" name="fullName" th:value="${candidate.fullName}"/><br/>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" th:value="${candidate.email}" />
+        </div>
 
-    <label for="phone">Phone:</label>
-    <input type="text" id="phone" name="phone" th:value="${candidate.phone}"/><br/>
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" class="form-control" th:value="${candidate.fullName}" />
+        </div>
 
-    <h3>Address</h3>
-    <label for="number">Number:</label>
-    <input type="text" id="number" name="address.number" th:value="${candidate.address.number}"/><br/>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone:</label>
+            <input type="text" id="phone" name="phone" class="form-control" th:value="${candidate.phone}" />
+        </div>
 
-    <label for="street">Street:</label>
-    <input type="text" id="street" name="address.street" th:value="${candidate.address.street}"/><br/>
+        <h3 class="mt-4">Address</h3>
 
-    <label for="city">City:</label>
-    <input type="text" id="city" name="address.city" th:value="${candidate.address.city}"/><br/>
+        <div class="mb-3">
+            <label for="number" class="form-label">Number:</label>
+            <input type="text" id="number" name="address.number" class="form-control" th:value="${candidate.address.number}" />
+        </div>
 
-    <label for="zipcode">Zipcode:</label>
-    <input type="text" id="zipcode" name="address.zipcode" th:value="${candidate.address.zipcode}"/><br/>
+        <div class="mb-3">
+            <label for="street" class="form-label">Street:</label>
+            <input type="text" id="street" name="address.street" class="form-control" th:value="${candidate.address.street}" />
+        </div>
 
-    <label for="country">Country:</label>
-    <select id="country" name="address.country">
-        <option th:each="country : ${countries}"
-                th:value="${country.numeric}"
-                th:text="${country == T(com.neovisionaries.i18n.CountryCode).VN ? 'Vietnam' : country.getName()}"
-                th:selected="${candidate.address.country != null and candidate.address.country == country.numeric}">
-        </option>
-    </select><br/>
-    <button type="submit">Save</button>
-</form>
+        <div class="mb-3">
+            <label for="city" class="form-label">City:</label>
+            <input type="text" id="city" name="address.city" class="form-control" th:value="${candidate.address.city}" />
+        </div>
+
+        <div class="mb-3">
+            <label for="zipcode" class="form-label">Zipcode:</label>
+            <input type="text" id="zipcode" name="address.zipcode" class="form-control" th:value="${candidate.address.zipcode}" />
+        </div>
+
+<!--        <div class="mb-3">-->
+<!--            <label for="country" class="form-label">Country:</label>-->
+<!--            <select id="country" name="address.country" class="form-select">-->
+<!--                <option th:each="country : ${countries}"-->
+<!--                        th:value="${country.numeric}"-->
+<!--                        th:text="${country == T(com.neovisionaries.i18n.CountryCode).VN ? 'Vietnam' : country.getName()}"-->
+<!--                        th:selected="${candidate.address.country != null and candidate.address.country == T(vn.edu.iuh.fit.lab_week5_spr_mvc.backend.converters.CountryCodeMapper).mapToShort(country)}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--        </div>-->
+        <div class="mb-3">
+            <label for="country" class="form-label">Country:</label>
+            <select id="country" name="address.country" class="form-select">
+                <option th:each="country : ${countries}"
+                        th:value="${country.numeric}"
+                        th:text="${T(com.neovisionaries.i18n.CountryCode).getByCode(country.numeric) != null ? T(com.neovisionaries.i18n.CountryCode).getByCode(country.numeric).getName() : 'Unknown'}"
+                        th:selected="${candidate.address.country != null and candidate.address.country == country.numeric}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

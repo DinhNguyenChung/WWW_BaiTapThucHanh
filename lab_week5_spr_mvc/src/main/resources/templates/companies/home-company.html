@@ -3,18 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Company</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .job-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
+        .job-post {
+            flex: 1 1 calc(33.33% - 20px);
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-post h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .job-post p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .job-post ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .job-post ul li {
+            font-size: 0.9rem;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .job-post ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2rem;
+            color: #007bff;
+        }
+
+        /* Modal styling */
+        .modal-content {
+            padding: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .job-post {
+                flex: 1 1 calc(50% - 20px); /* 2 columns */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .job-post {
+                flex: 1 1 100%; /* 1 column */
+            }
+        }
+        /* Style for the Find Candidates button */
+        .find-candidates-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .find-candidates-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
 <header th:include="layout/header :: header"></header>
 <div class="container">
-    <h1 th:text="${company.compName}"></h1>
+    <div style="display: flex;justify-content: space-between;padding: 20px;">
+        <div>
+            <h1>Jobs at Company</h1>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add new Job-Skill</button>
+        </div>
+
+    </div>
+    <div class="job-list">
+        <div th:each="job : ${jobSkills}">
+            <div class="job-post mb-4 p-3 border rounded">
+                <h2 th:text="${job.jobName}"></h2>
+                <p th:text="${job.jobDesc}"></p>
+                <h4>Required Skills</h4>
+                <ul th:each="skill : ${job.getSkillNameList()}">
+                    <li  th:text="${skill}"></li>
+                </ul>
+                <!-- Button to find candidates for each job -->
+                <form action="/company/showCandidatesByJob" method="post">
+                    <input type="hidden" name="jobName" th:value="${job.jobName}">
+                    <input type="hidden" name="emailHeader" th:value="${emailHeader}">
+                    <input type="hidden" name="NameCompany" th:value="${UserName}">
+                    <button type="submit" class="btn btn-success find-candidates-btn mt-3">Find Candidates</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <main>
     <!-- Large modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add new Job-Skill</button>
 
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -69,6 +171,7 @@
             </div>
         </div>
     </div>
+
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

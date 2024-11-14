@@ -18,4 +18,7 @@ public class CompanyServices {
     public Company findCompanyByEmail(String email) {
         return companyRepository.findCompanyByEmail(email);
     }
+    public Company findCompanyById(long id) {
+        return companyRepository.findById(id);
+    }
 }

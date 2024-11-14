@@ -79,7 +79,8 @@
       <div class="modal fade" id="addSkillModal" tabindex="-1" aria-labelledby="addSkillModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
-            <form>
+            <form action="/candidates/addSkillForCandidate" method="post">
+              <input type="hidden" name="idCandidate" th:value="${candidate.getId()}">
               <div class="modal-header">
                 <h5 class="modal-title" id="addSkillModalLabel">Add New Skill</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
