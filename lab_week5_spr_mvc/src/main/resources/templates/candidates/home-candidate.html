@@ -73,6 +73,7 @@
       <p th:each="candidateSkill:${CandidateSkill}">
         <span th:text="${candidateSkill.skill.getSkillName()}"></span>
       </p>
+
     </div>
     <div class="form-modal">
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSkillModal">Add New Skill</button>
@@ -130,12 +131,44 @@
     </div>
   </div>
   <h1 class="mb-4">Suitable Jobs for You:</h1>
+<!--  <div class="job-list">-->
+<!--    <div class="col-md-4 card" th:each="job:${job}">-->
+<!--      <p><strong>Job Description:</strong> <span th:text="${job.jobDesc}"></span></p>-->
+<!--      <p><strong>Job Name:</strong> <span th:text="${job.jobName}"></span></p>-->
+<!--      <div th:each="skill: ${skillMissing}">-->
+<!--       <div th:if="${skill.skillid}"></div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
   <div class="job-list">
-    <div class="col-md-4 card" th:each="job:${job}">
-      <p><strong>Job Description:</strong> <span th:text="${job.jobDesc}"></span></p>
-      <p><strong>Job Name:</strong> <span th:text="${job.jobName}"></span></p>
+    <div class="col-md-4 card mb-3" th:each="entry : ${skillMissing}">
+      <p><strong>Job Description:</strong> <span th:text="${entry.key.jobDesc}"></span></p>
+      <p><strong>Job Name:</strong> <span th:text="${entry.key.jobName}"></span></p>
+
+      <!-- Nút để hiển thị kỹ năng cần học thêm -->
+      <button class="btn btn-primary mb-2" type="button"
+              data-bs-toggle="collapse"
+              th:attr="data-bs-target='#skillsNeededFor' + ${entry.key.id}">
+        Show Skills Needed
+      </button>
+
+      <!-- Danh sách kỹ năng cần học thêm của ứng viên cho công việc -->
+      <div th:id="'skillsNeededFor' + ${entry.key.id}" class="collapse">
+        <div class="card card-body">
+          <h5>Skills Needed:</h5>
+          <ul>
+            <li th:each="skill : ${entry.value}">
+              <span th:text="${skill.skillname}">Skill Name</span> -
+              <span th:text="'Required Level: ' + ${skill.skilllevel}">Required Level</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
+
+
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

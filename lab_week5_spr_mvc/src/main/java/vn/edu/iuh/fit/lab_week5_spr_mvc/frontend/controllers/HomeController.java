@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.JobWithSkillsDTO;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.SkillMissingDTO;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CompanyRepository;
@@ -62,6 +63,14 @@ public class HomeController {
             model.addAttribute("CandidateSkill",candidateSkills );
             model.addAttribute("candidate",candidate);
             model.addAttribute("companies", companyServices.findAll());
+            List<Job> jobs = jobService.getMatchingJobsForCandidate(candidate.getId());
+            Map<Job, List<SkillMissingDTO>> skillMissingDTOMap = new HashMap<>();
+            for (Job job : jobs) {
+                // Lấy danh sách các kỹ năng còn thiếu cho ứng viên đối với công việc hiện tại
+                List<SkillMissingDTO> missingSkills = skillService.getSkillMissingForCandidate(job.getId(), candidate.getId());
+                skillMissingDTOMap.put(job, missingSkills);
+            }
+            model.addAttribute("skillMissing",skillMissingDTOMap);
             model.addAttribute("job",jobService.getMatchingJobsForCandidate(candidate.getId()));
             model.addAttribute("UserName",candidate.getFullName());
             model.addAttribute("id",candidate.getId());

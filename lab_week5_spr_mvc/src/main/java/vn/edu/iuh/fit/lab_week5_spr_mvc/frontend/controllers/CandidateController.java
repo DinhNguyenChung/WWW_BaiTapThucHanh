@@ -262,6 +262,11 @@ public String addNewSkillForCandidate(Model model, @RequestParam("newSkill") Str
 }
 
 
-
-
+//    @PostMapping("/showSkillMissing")
+//    public String showSkillMissing(Model model,@RequestParam("jobid") Long jobid, @RequestParam("candidateId") Long canid) {
+//
+//
+//        model.addAttribute("skillMissing",skillService.getSkillMissingForCandidate(jobid, canid));
+//        return "candidates/home-candidate";
+//    }
 }

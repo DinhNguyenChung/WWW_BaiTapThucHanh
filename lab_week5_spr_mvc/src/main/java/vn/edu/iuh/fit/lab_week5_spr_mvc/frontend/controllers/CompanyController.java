@@ -124,4 +124,6 @@ public class CompanyController
         return "companies/candidatesByJob";
     }
 
+
+
 }

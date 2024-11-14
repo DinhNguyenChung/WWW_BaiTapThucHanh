@@ -38,6 +38,8 @@
    ![img_12.png](img_12.png)
    Khi select candidate nào sẽ hiển thị ra email tương ứng và bấm gửi tuyển dụng cho Candidate đó
 ![img_13.png](img_13.png)
+   Ở Home candidate ở mỗi joblist có showSkill cần cải thiện thêm cho mỗi công việc đó khi click vào
+![img_14.png](img_14.png)
 ### Notes
 Tabs Header đã có ràng buộc giữa home,logout,sigup,edit
  
