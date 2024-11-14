@@ -15,7 +15,7 @@
 3. Hiển thị được dữ liệu của Candidates lên http://localhost:8080/candidates/list và Candidate-Paging chứa list Candidates trên http://localhost:8080/candidates/candidate
 ![img_1.png](img_1.png)
 ![img_2.png](img_2.png)
-4. Có thể tạo mới candidate và company bấm vào sigup sẽ hiển thị 2 list addCandidate và addCompany
+4. Trên trang chủ (http://localhost:8080) Có thể tạo mới candidate và company bấm vào sigup sẽ hiển thị 2 list addCandidate và addCompany
 ![img_3.png](img_3.png)
    Giao diện AddCandidate
 ![img_4.png](img_4.png)
