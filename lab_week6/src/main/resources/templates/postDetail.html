@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}"></title>
+</head>
+<body>
+<h1 th:text="${post.title}">Post Title</h1>
+<p th:text="${post.content}">Post Content</p>
+
+<h2>Comments</h2>
+<div th:if="${post.postComments != null}">
+    <div th:each="comment : ${post.postComments}">
+        <h3 th:text="${comment.title}">Comment Title</h3>
+        <p th:text="${comment.content}">Comment Content</p>
+        <p th:text="${#dates.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">Comment Date</p>
+    </div>
+</div>
+</body>
+</html>
