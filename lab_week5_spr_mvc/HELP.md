@@ -31,10 +31,12 @@
    ![img_9.png](img_9.png)
 
     Login thành công của company sẽ hiển thị ra những bài tuyển dụng cho công việc và kí năng yêu cầu
-![img_10.png](img_10.png)
-   Company có thể add bài tuyển dụng mới (Add JobSkills)
-![img_11.png](img_11.png)
+   ![img_17.png](img_17.png)
+   Company có thể add bài tuyển dụng mới (Add JobSkills), Có thể add cho mỗi jobs nhiều skills
+   ![img_15.png](img_15.png)
+
    Trên mỗi bài khi bấm vào findCandidates sẽ hiển ra danh sách những Candidate phù hợp với công việc đó
+   ![img_16.png](img_16.png)
    ![img_12.png](img_12.png)
    Khi select candidate nào sẽ hiển thị ra email tương ứng và bấm gửi tuyển dụng cho Candidate đó
 ![img_13.png](img_13.png)

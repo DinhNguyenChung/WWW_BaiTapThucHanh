@@ -42,14 +42,14 @@
                        <div th:if="${candidate != null}">
                            <a href="/" class="btn btn-outline-light me-2">Logout</a>
                            <span class="User-Name text-white">Welcome, <span th:text="${UserName}">User</span></span>
-                           <a th:href="@{/candidates/edit/{id}(id=${id})}" class="btn btn-outline-light me-2">Edit Candidate</a>
+                           <a th:href="@{/candidates/edit/{id}(id=${id})}" class="btn btn-outline-light me-2">About</a>
 
                        </div>
 
                        <div th:if="${company != null}">
                            <a href="/" class="btn btn-outline-light me-2">Logout</a>
                            <span class="User-Name text-white">Welcome, <span th:text="${UserName}">User</span></span>
-                           <a th:href="@{/company/edit/{id}(id=${id})}" class="btn btn-outline-light me-2">Edit Company</a>
+                           <a th:href="@{/company/edit/{id}(id=${id})}" class="btn btn-outline-light me-2">About</a>
                        </div>
                    </div>
 

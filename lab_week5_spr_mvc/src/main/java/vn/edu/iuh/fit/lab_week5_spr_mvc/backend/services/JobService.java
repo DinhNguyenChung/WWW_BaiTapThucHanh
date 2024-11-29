@@ -2,12 +2,16 @@ package vn.edu.iuh.fit.lab_week5_spr_mvc.backend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.JobRequest;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.JobSkillDTO;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.JobWithSkillsDTO;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.DTOs.SkillRequest;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.models.*;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.CandidateRepository;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.JobRepository;
 import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.JobSkillRepository;
+import vn.edu.iuh.fit.lab_week5_spr_mvc.backend.repositories.SkillRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,8 @@ public class JobService {
     private CandidateRepository candidateRepository;
     @Autowired
     private JobSkillRepository jobSkillRepository;
+    @Autowired
+    private SkillRepository skillRepository;
 
     public Job saveJob(Job job) {
         return jobRepository.save(job);
@@ -64,5 +70,7 @@ public class JobService {
 
         return jobWithSkillsDTOs;
     }
-
+    public void saveJobSkills(List<JobSkill> jobSkills) {
+        jobSkillRepository.saveAll(jobSkills);
+    }
 }

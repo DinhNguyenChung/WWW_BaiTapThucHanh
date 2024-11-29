@@ -37,5 +37,8 @@ public class SkillService {
         }
         return dtos;
     }
+    public Skill saveSkill(Skill skill) {
+        return skillRepository.save(skill);
+    }
 
 }
